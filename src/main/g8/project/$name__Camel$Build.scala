@@ -7,7 +7,7 @@ import sbt.Project.Initialize
 //
 // Build setup
 //
-object $name;format="Camel"$Build extends Build {
+object $name$Build extends Build {
 
 	//
 	// Settings
@@ -15,11 +15,11 @@ object $name;format="Camel"$Build extends Build {
 	lazy val defaultSettings = Defaults.defaultSettings ++ 
 		scalariformSettings ++ 
 		Seq(
+		
 		// Info
 		organization := "$organization$",
 		version := "$version$",
 		scalaVersion := "$scala_version$",
-		scalariformSettings,
 
 		// Repositories
 		resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases",
@@ -42,10 +42,10 @@ object $name;format="Camel"$Build extends Build {
 	//
 	// Projects
 	//
-	lazy val $name;format="camel"$ = Project(id = "$name;format="Camel"$",
+	lazy val $name$ = Project(id = "$name$",
 							base=file(""),
                            settings = defaultSettings ++ Seq(
-                           libraryDependencies ++= Dependencies.$name;format="camel"$
+                           libraryDependencies ++= Dependencies.$name$
 						))	
 }
 
@@ -59,7 +59,7 @@ object Dependencies {
 	
 	import Dependency._
 	
-	val $name;format="camel"$ = Seq(akkaActor)	
+	val $name$ = Seq(akkaActor)	
 }
 
 	
