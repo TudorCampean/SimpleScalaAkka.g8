@@ -1,4 +1,4 @@
-scala-akka-mongo.g8
+SimpleScalaAkka.g8
 ===================
 
 Repository for initializing applications

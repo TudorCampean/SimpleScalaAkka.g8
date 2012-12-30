@@ -1,9 +1,8 @@
 import sbt._
 import sbt.Keys._
 import com.typesafe.sbteclipse.plugin.EclipsePlugin._
+import com.typesafe.sbt.SbtScalariform._
 import sbt.Project.Initialize
-import sbtassembly.Plugin._
-import AssemblyKeys._
 
 //
 // Build setup
@@ -13,11 +12,14 @@ object $name;format="Camel"$Build extends Build {
 	//
 	// Settings
 	//
-	lazy val defaultSettings = Defaults.defaultSettings ++ Seq(
+	lazy val defaultSettings = Defaults.defaultSettings ++ 
+		scalariformSettings ++ 
+		Seq(
 		// Info
 		organization := "$organization$",
 		version := "$version$",
 		scalaVersion := "$scala_version$",
+		scalariformSettings,
 
 		// Repositories
 		resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases",
