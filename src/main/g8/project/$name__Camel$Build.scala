@@ -1,26 +1,64 @@
 import sbt._
 import sbt.Keys._
+import com.typesafe.sbteclipse.plugin.EclipsePlugin._
+import sbt.Project.Initialize
+import sbtassembly.Plugin._
+import AssemblyKeys._
 
+//
+// Build setup
+//
 object $name;format="Camel"$Build extends Build {
 
-  lazy val $name;format="camel"$ = Project(
-    id = "$name;format="norm"$",
-    base = file("."),
-    settings = Project.defaultSettings ++ Seq(
-      name := "$name$",
-      organization := "$organization$",
-      version := "$version$",
-      scalaVersion := "$scala_version$",
-      resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases",
-	  resolvers += "Typesafe Snapshots" at "http://repo.typesafe.com/typesafe/snapshots",
-	  resolvers += "Sonatype OSS Releases" at "https://oss.sonatype.org/content/repositories/releases",
-	  resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
-	  libraryDependencies += "com.typesafe.akka" % "akka-actor" % "2.0.3",
-	  libraryDependencies += "org.slf4j" % "slf4j-api" % "1.6.6",
-	  libraryDependencies += "ch.qos.logback" % "logback-core" % "1.0.7",
-	  libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.0.7",
-	  libraryDependencies += "org.mongodb" % "casbah_2.9.2" % "2.4.1" ,
-	  javaOptions in run += "-server -Xms256M -Xmx256M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=64M -XX:+UseParallelGC -XX:+AggressiveOpts -XX:+UseFastAccessorMethods"
-    )
-  )
+	//
+	// Settings
+	//
+	lazy val defaultSettings = Defaults.defaultSettings ++ Seq(
+		// Info
+		organization := "$organization$",
+		version := "$version$",
+		scalaVersion := "$scala_version$",
+
+		// Repositories
+		resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases",
+		resolvers += "Typesafe Snapshots" at "http://repo.typesafe.com/typesafe/snapshots",
+		resolvers += "Sonatype OSS Releases" at "https://oss.sonatype.org/content/repositories/releases",
+		resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
+    
+		// Compile options
+		scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-unchecked", "-optimize", "-feature"),
+		javacOptions  ++= Seq("-Xlint:unchecked", "-Xlint:deprecation"),
+    
+		// sbtEclipse - see examples https://github.com/typesafehub/sbteclipse/blob/master/sbteclipse-plugin/src/sbt-test/sbteclipse/02-contents/project/Build.scala
+		EclipseKeys.createSrc := EclipseCreateSrc.ValueSet(EclipseCreateSrc.Unmanaged, EclipseCreateSrc.Source, EclipseCreateSrc.Resource),
+		EclipseKeys.withSource := true,
+		
+		// Run options with GC
+		javaOptions in run += "-server -Xms256M -Xmx256M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=64M -XX:+UseParallelGC -XX:+AggressiveOpts -XX:+UseFastAccessorMethods"	
+	)
+  
+	//
+	// Projects
+	//
+	lazy val $name;format="camel"$ = Project(id = "$name;format="Camel"$",
+							base=file(""),
+                           settings = defaultSettings ++ Seq(
+                           libraryDependencies ++= Dependencies.$name;format="camel"$
+						))	
 }
+
+//
+// Dependencies
+//
+object Dependencies {
+	object Dependency {
+		val akkaActor     = "com.typesafe.akka"      %% "akka-actor"         % "2.1.0" 
+	}
+	
+	import Dependency._
+	
+	val $name;format="camel"$ = Seq(akkaActor)	
+}
+
+	
+
