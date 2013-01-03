@@ -36,7 +36,8 @@ object $name$Build extends Build {
 		EclipseKeys.withSource := true,
 		
 		// Run options with GC
-		javaOptions in run += "-server -Xms256M -Xmx256M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=64M -XX:+UseParallelGC -XX:+AggressiveOpts -XX:+UseFastAccessorMethods"	
+		fork in run := true,
+		javaOptions in run ++= Seq("-server", "-Xms1G", "-Xmx2G","-Xss1m","-XX:+CMSClassUnloadingEnabled", "-XX:MaxPermSize=64m", "-XX:+UseParallelGC", "-XX:+AggressiveOpts", "-XX:+UseFastAccessorMethods")	
 	)
   
 	//
